@@ -1,0 +1,47 @@
+﻿@model List<Basecamp1.Models.Project>
+
+<div class="container mt-5">
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="text-white">Projects</h2>
+        <a class="btn btn-success rounded-pill px-4" href="/Projects/Create">
+            + New Project
+        </a>
+    </div>
+
+    @if (!Model.Any())
+    {
+        <div class="text-center text-white mt-5">
+            <h4>No projects yet</h4>
+            <p>Create your first project 🚀</p>
+        </div>
+    }
+    else
+    {
+        <div class="row g-4">
+            @foreach (var item in Model)
+            {
+                <div class="col-md-4">
+                    <div class="card bg-dark text-white border-0 shadow-lg rounded-4 h-100">
+                        <div class="card-body p-4">
+
+                            <h4 class="fw-bold">@item.Name</h4>
+
+                            <p class="text-muted">
+                                @(string.IsNullOrEmpty(item.Description) ? "No description" : item.Description)
+                            </p>
+
+                            <div class="d-flex gap-2 mt-4">
+                                <a class="btn btn-outline-info btn-sm" href="/Projects/Details/@item.Id">View</a>
+                                <a class="btn btn-outline-warning btn-sm" href="/Projects/Edit/@item.Id">Edit</a>
+                                <a class="btn btn-outline-danger btn-sm" href="/Projects/Delete/@item.Id">Delete</a>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+
+</div>

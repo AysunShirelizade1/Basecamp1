@@ -1,0 +1,10 @@
+﻿<h2>Edit Project</h2>
+
+<form method="post">
+    <input type="hidden" name="Id" value="@Model.Id" />
+
+    <input type="text" name="Name" value="@Model.Name" /><br />
+    <textarea name="Description">@Model.Description</textarea><br />
+
+    <button type="submit">Save</button>
+</form>
