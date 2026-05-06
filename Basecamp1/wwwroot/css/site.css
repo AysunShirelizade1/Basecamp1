@@ -215,6 +215,7 @@ body {
     font-weight: 700;
     white-space: nowrap;
 }
+git remote remove origin
 
 .done {
     background: #14532d;
