@@ -1,33 +1,52 @@
-﻿<h2>Users</h2>
+﻿@model List<Basecamp1.Models.User>
 
-<a href="/Projects">Back to Projects</a>
+<h2 class="text-white mb-4">Users Management</h2>
 
-<table border="1">
-    <tr>
-        <th>Name</th>
-        <th>Email</th>
-        <th>Admin</th>
-        <th>Actions</th>
-    </tr>
-
-    @foreach (var user in Model)
-    {
+<table class="table table-dark table-hover table-bordered">
+    <thead>
         <tr>
-            <td>@user.FullName</td>
-            <td>@user.Email</td>
-            <td>@user.IsAdmin</td>
-            <td>
-                <a href="/Admin/Delete/@user.Id">Delete</a>
-
-                @if (!user.IsAdmin)
-                {
-                    <a href="/Admin/SetAdmin/@user.Id">Make Admin</a>
-                }
-                else
-                {
-                    <a href="/Admin/RemoveAdmin/@user.Id">Remove Admin</a>
-                }
-            </td>
+            <th>Full Name</th>
+            <th>Email</th>
+            <th>Role</th>
+            <th>Actions</th>
         </tr>
-    }
+    </thead>
+
+    <tbody>
+        @foreach (var user in Model)
+        {
+            <tr>
+                <td>@user.FullName</td>
+                <td>@user.Email</td>
+                <td>
+                    @if (user.IsAdmin)
+                    {
+                        <span class="badge bg-warning text-dark">Admin</span>
+                    }
+                    else
+                    {
+                        <span class="badge bg-secondary">User</span>
+                    }
+                </td>
+                <td>
+                    @if (!user.IsAdmin)
+                    {
+                        <a class="btn btn-warning btn-sm" href="/Admin/SetAdmin/@user.Id">
+                            Make Admin
+                        </a>
+                    }
+                    else
+                    {
+                        <a class="btn btn-secondary btn-sm" href="/Admin/RemoveAdmin/@user.Id">
+                            Remove Admin
+                        </a>
+                    }
+
+                    <a class="btn btn-danger btn-sm" href="/Admin/Delete/@user.Id">
+                        Delete
+                    </a>
+                </td>
+            </tr>
+        }
+    </tbody>
 </table>
