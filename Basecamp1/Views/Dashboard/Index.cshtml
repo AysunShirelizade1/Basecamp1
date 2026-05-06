@@ -1,0 +1,106 @@
+﻿@{
+    ViewData["Title"] = "Dashboard";
+}
+
+<div class="dashboard-top">
+    <div>
+        <h1>Welcome back </h1>
+        <p>Manage your projects and tasks efficiently.</p>
+    </div>
+
+    <a href="/Projects/Create" class="create-btn">
+        + Create Project
+    </a>
+</div>
+
+<div class="stats-grid">
+
+    <div class="stat-card">
+        <span>Total Projects</span>
+        <h2>@ViewBag.TotalProjects</h2>
+    </div>
+
+    <div class="stat-card">
+        <span>Completed Tasks</span>
+        <h2>34</h2>
+    </div>
+
+    <div class="stat-card">
+        <span>In Progress</span>
+        <h2>5</h2>
+    </div>
+
+    <div class="stat-card">
+        <span>Team Members</span>
+        <h2>@ViewBag.TotalUsers</h2>
+    </div>
+
+</div>
+
+<div class="dashboard-grid">
+
+    <!-- RECENT PROJECTS -->
+    <div class="dashboard-card">
+        <div class="card-header-custom">
+            <h3>Recent Projects</h3>
+            <a href="/Projects/Index">View all</a>
+        </div>
+
+        <div class="project-item">
+            <div>
+                <strong>Basecamp UI</strong>
+                <p>Design system update</p>
+            </div>
+
+            <span class="status done">Done</span>
+        </div>
+
+        <div class="project-item">
+            <div>
+                <strong>Task System</strong>
+                <p>Backend development</p>
+            </div>
+
+            <span class="status progress">In Progress</span>
+        </div>
+
+        <div class="project-item">
+            <div>
+                <strong>Authentication</strong>
+                <p>JWT integration</p>
+            </div>
+
+            <span class="status pending">Pending</span>
+        </div>
+
+    </div>
+
+    <!-- TASKS -->
+    <div class="dashboard-card">
+        <div class="card-header-custom">
+            <h3>Today's Tasks</h3>
+        </div>
+
+        <div class="task-item">
+            <input type="checkbox" />
+            <span>Create project UI</span>
+        </div>
+
+        <div class="task-item">
+            <input type="checkbox" checked />
+            <span>Fix login system</span>
+        </div>
+
+        <div class="task-item">
+            <input type="checkbox" />
+            <span>Add dashboard cards</span>
+        </div>
+
+        <div class="task-item">
+            <input type="checkbox" />
+            <span>Push to GitHub</span>
+        </div>
+
+    </div>
+
+</div>

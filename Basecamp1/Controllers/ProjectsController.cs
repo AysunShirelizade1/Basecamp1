@@ -53,16 +53,11 @@ public class ProjectsController : Controller
 
     public IActionResult Details(int id)
     {
-        var user = GetCurrentUser();
-        if (user == null)
-            return RedirectToAction("Login", "Account");
+        var project = _context.Projects
+            .FirstOrDefault(x => x.Id == id);
 
-        var project = _context.Projects.FirstOrDefault(x => x.Id == id);
-
-        if (project == null) return NotFound();
-
-        if (!user.IsAdmin && project.UserId != user.Id)
-            return Content("Access Denied");
+        if (project == null)
+            return NotFound();
 
         return View(project);
     }

@@ -30,7 +30,7 @@ public class AccountController : Controller
     public IActionResult Login()
     {
         if (HttpContext.Session.GetInt32("UserId") != null)
-            return RedirectToAction("Index", "Projects");
+            return RedirectToAction("Index", "Dashboard");
 
         return View();
     }

@@ -7,4 +7,5 @@ public class Project : BaseEntity
 
     public int UserId { get; set; }
     public User? User { get; set; }
+    public List<TaskItem> Tasks { get; set; } = new List<TaskItem>();
 }

@@ -1,52 +1,69 @@
 ﻿@model List<Basecamp1.Models.User>
 
-<h2 class="text-white mb-4">Users Management</h2>
+<div class="admin-header">
+    <div>
+        <h1>Users Management</h1>
+        <p>Manage users, permissions and admin roles.</p>
+    </div>
+</div>
 
-<table class="table table-dark table-hover table-bordered">
-    <thead>
-        <tr>
-            <th>Full Name</th>
-            <th>Email</th>
-            <th>Role</th>
-            <th>Actions</th>
-        </tr>
-    </thead>
-
-    <tbody>
-        @foreach (var user in Model)
-        {
+<div class="admin-card">
+    <table class="admin-table">
+        <thead>
             <tr>
-                <td>@user.FullName</td>
-                <td>@user.Email</td>
-                <td>
-                    @if (user.IsAdmin)
-                    {
-                        <span class="badge bg-warning text-dark">Admin</span>
-                    }
-                    else
-                    {
-                        <span class="badge bg-secondary">User</span>
-                    }
-                </td>
-                <td>
-                    @if (!user.IsAdmin)
-                    {
-                        <a class="btn btn-warning btn-sm" href="/Admin/SetAdmin/@user.Id">
-                            Make Admin
-                        </a>
-                    }
-                    else
-                    {
-                        <a class="btn btn-secondary btn-sm" href="/Admin/RemoveAdmin/@user.Id">
-                            Remove Admin
-                        </a>
-                    }
-
-                    <a class="btn btn-danger btn-sm" href="/Admin/Delete/@user.Id">
-                        Delete
-                    </a>
-                </td>
+                <th>User</th>
+                <th>Email</th>
+                <th>Role</th>
+                <th class="text-end">Actions</th>
             </tr>
-        }
-    </tbody>
-</table>
+        </thead>
+
+        <tbody>
+            @foreach (var user in Model)
+            {
+                <tr>
+                    <td>
+                        <div class="admin-user">
+                            <div class="admin-avatar">
+                                @user.FullName.Substring(0, 1)
+                            </div>
+                            <strong>@user.FullName</strong>
+                        </div>
+                    </td>
+
+                    <td>@user.Email</td>
+
+                    <td>
+                        @if (user.IsAdmin)
+                        {
+                            <span class="role-badge admin-role">Admin</span>
+                        }
+                        else
+                        {
+                            <span class="role-badge user-role">User</span>
+                        }
+                    </td>
+
+                    <td class="text-end">
+                        @if (!user.IsAdmin)
+                        {
+                            <a class="btn-action make-admin" href="/Admin/SetAdmin/@user.Id">
+                                Make Admin
+                            </a>
+                        }
+                        else
+                        {
+                            <a class="btn-action remove-admin" href="/Admin/RemoveAdmin/@user.Id">
+                                Remove Admin
+                            </a>
+                        }
+
+                        <a class="btn-action delete-user" href="/Admin/Delete/@user.Id">
+                            Delete
+                        </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
