@@ -54,6 +54,7 @@ public class ProjectsController : Controller
     public IActionResult Details(int id)
     {
         var project = _context.Projects
+            .Include(x => x.Tasks)
             .FirstOrDefault(x => x.Id == id);
 
         if (project == null)
