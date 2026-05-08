@@ -356,3 +356,51 @@ git remote remove origin
     opacity: 0.85;
     color: white;
 }
+
+.profile-header {
+    margin-bottom: 28px;
+}
+
+    .profile-header h1 {
+        font-size: 36px;
+        font-weight: 800;
+    }
+
+    .profile-header p {
+        color: #9ca3af;
+    }
+
+.profile-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+}
+
+.profile-card {
+    background: #1f2937;
+    border: 1px solid #374151;
+    border-radius: 24px;
+    padding: 24px;
+}
+
+    .profile-card h3 {
+        margin-bottom: 20px;
+    }
+
+    .profile-card label {
+        color: #d1d5db;
+        margin-bottom: 6px;
+    }
+
+    .profile-card input {
+        background: #111827;
+        color: white;
+        border: 1px solid #374151;
+    }
+
+        .profile-card input:focus {
+            background: #111827;
+            color: white;
+            border-color: #6366f1;
+            box-shadow: none;
+        }
