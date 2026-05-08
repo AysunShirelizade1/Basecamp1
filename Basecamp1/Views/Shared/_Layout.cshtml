@@ -12,33 +12,45 @@
 <body>
     <div class="app-shell">
         <aside class="sidebar">
-            <div class="brand"> Basecamp</div>
+            <div class="brand">Basecamp</div>
 
-            <nav class="sidebar-menu">
-                <a href="/Dashboard/Index">🏠 Dashboard</a>
-                <a href="/Projects/Index">📁 Projects</a>
+            @if (Context.Session.GetInt32("UserId") != null)
+            {
+                <nav class="sidebar-menu">
+                    <a href="/Dashboard/Index">🏠 Dashboard</a>
+                    <a href="/Projects/Index">📁 Projects</a>
 
-                @if (Context.Session.GetString("IsAdmin") == "true")
-                {
-                    <a href="/Admin/Users">👥 Users / Admin</a>
-                }
-            </nav>
+                    @if (Context.Session.GetString("IsAdmin") == "true")
+                    {
+                        <a href="/Admin/Users">👥 Users / Admin</a>
+                    }
+                </nav>
+            }
 
             <div class="sidebar-footer">
-                <div class="user-card">
-                    <div class="user-avatar">
-                        @Context.Session.GetString("UserName")?.Substring(0, 1)
+
+                @if (Context.Session.GetInt32("UserId") != null)
+                {
+                    <div class="user-card">
+                        <div class="user-avatar">
+                            @Context.Session.GetString("UserName")?.Substring(0, 1)
+                        </div>
+
+                        <div>
+                            <strong>@Context.Session.GetString("UserName")</strong>
+                            <span>
+                                @(Context.Session.GetString("IsAdmin") == "true" ? "Admin" : "User")
+                            </span>
+                        </div>
                     </div>
 
-                    <div>
-                        <strong>@Context.Session.GetString("UserName")</strong>
-                        <span>
-                            @(Context.Session.GetString("IsAdmin") == "true" ? "Admin" : "User")
-                        </span>
-                    </div>
-                </div>
+                    <a class="logout-btn" href="/Account/Logout">Logout</a>
+                }
+                else
+                {
+                    <a class="logout-btn" href="/Account/Login">Login</a>
+                }
 
-                <a class="logout-btn" href="/Account/Logout">Logout</a>
             </div>
         </aside>
 
