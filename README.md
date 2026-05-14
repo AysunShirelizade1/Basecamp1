@@ -2,86 +2,92 @@
 ***
 
 ## Task
-The goal of this project was to build a web-based project management 
-application inspired by Basecamp.
-Users should be able to create accounts,
- log in, create projects, and manage tasks inside those projects.
-
-The main challenge of the project was implementing both backend and 
-frontend features together while maintaining a clean structure 
-and good user experience.
+This project is a follow-up to MyBaseCamp1. 
+The goal was to extend the existing
+project management application with new collaboration features:
+ file attachments,
+discussion threads, and messages. 
+The challenge was integrating these features
+cleanly into the existing structure while keeping role-based access control intact.
 ## Description
-This project was developed using ASP.NET Core MVC with Entity Framework Core and SQL Server.
+Built on top of MyBaseCamp1 using ASP.NET Core MVC, Entity Framework Core, and SQL Server.
 
-Features implemented in the project:
+New features added in MyBaseCamp2:
+- **Attachment** - Any project member can upload and delete attachments (png, jpg, pdf, txt)
+- **Thread** - Only the project admin can create, edit, and delete discussion threads
+- **Message** - Any project member can post, edit, and delete messages inside a thread
 
-User Registration and Login
-Session-based Authentication
-Admin/User Roles
-Project Management System
-Task Management System
-Dashboard Page
-Responsive UI with Bootstrap
-CRUD Operations for Projects and Tasks
-Database Integration using Entity Framework Core
-SQL Server Migrations
-
-The application allows users to manage projects and tasks in a simple and organized interface.
+Technologies used:
+- ASP.NET Core MVC
+- Entity Framework Core
+- SQL Server
+- Bootstrap 5
+- C#
 ## Installation
-Clone the repository from Qwasar Git:
+Clone the repository:
+```bash
+git clone https://git.us.qwasar.io/my_basecamp_2/my_basecamp_2.git
+```
+Make sure the following are installed:
+- .NET 8 SDK
+- SQL Server
+- Entity Framework Core Tools
 
-git clone https://git.us.qwasar.io/my_basecamp_1_212282_nxx1-x/my_basecamp_1.git
+Update the connection string in `appsettings.json`:
+```json
+"ConnectionStrings": {
+  "DefaultConnection": "Server=YOUR_SERVER;Database=Basecamp2;Trusted_Connection=True;"
+}
+```
 
-Open the solution using Visual Studio or Visual Studio Code.
-
-Make sure the following technologies are installed on your computer:
-
-.NET 8 SDK
-SQL Server
-Entity Framework Core Tools
-
-Update the database connection string inside the appsettings.json file according to your local SQL Server configuration.
-
-After that, apply Entity Framework migrations using:
-
+Apply migrations and create the database:
+```bash
 dotnet ef database update
+```
 
-Finally, run the project using:
-
+Run the project:
+```bash
 dotnet run
-
-The application will start locally and can be accessed from the browser.
+```
 ## Usage
-After starting the application:
+Then open `https://localhost:xxxx` in your browser.
 
-Register a new account
-Login to the system
-Create projects
-Add tasks to projects
-Manage tasks from the dashboard
+**Important:** The first user to register automatically becomes admin.
+Register your account first, then log in with admin privileges.
 
-Example:
+**Step by step:**
 
-dotnet run
+1. **Register & Login**
+   - Go to `/Account/Register` and create your account
+   - The first registered user automatically becomes admin
+   - Log in at `/Account/Login`
 
-Then open:
+2. **Projects**
+   - After login you will see the Dashboard
+   - Click `Projects` from the navigation menu
+   - Click `New Project` to create a project
+   - Click `View` on any project to open the project details page
 
-https://localhost:xxxx
+3. **Attachments** (inside project details)
+   - Any project member can upload files (png, jpg, pdf, txt)
+   - Click `Choose File`, select your file and click `Upload`
+   - Uploaded files are listed with their format badge
+   - Click `Download` to view the file or `Delete` to remove it
 
-in your browser.
+4. **Discussion Threads** (inside project details)
+   - Only the project admin can create threads
+   - Click `+ New Thread`, enter a title and click `Create`
+   - Click `Open` to enter a thread
+   - Edit or delete a thread using the `Edit` / `Delete` buttons
 
-Technologies Used
-ASP.NET Core MVC
-Entity Framework Core
-SQL Server
-Bootstrap 5
-C#
-HTML / CSS
-Author
+5. **Messages** (inside a thread)
+   - Any project member can post a message
+   - Type your message in the text area and click `Send`
+   - You can edit or delete your own messages
 
-Aysun Shirelizade
-
-Made at Qwasar SV -- Software Engineering School
+6. **Admin Panel**
+   - Admin users can access `/Admin/Users`
+   - From there you can promote users to admin or remove admin rights
 
 ### The Core Team
 
