@@ -44,6 +44,7 @@ public class ProjectsController : Controller
             return RedirectToAction("Login", "Account");
 
         project.UserId = user.Id;
+        project.AdminId = user.Id;  
 
         _context.Projects.Add(project);
         _context.SaveChanges();
@@ -51,14 +52,21 @@ public class ProjectsController : Controller
         return RedirectToAction("Index");
     }
 
-    public IActionResult Details(int id)
+    public async Task<IActionResult> Details(int id)
     {
-        var project = _context.Projects
-            .Include(x => x.Tasks)
-            .FirstOrDefault(x => x.Id == id);
+        var userId = HttpContext.Session.GetInt32("UserId");
+        if (userId == null) return RedirectToAction("Login", "Account");
 
-        if (project == null)
-            return NotFound();
+        var project = await _context.Projects
+            .Include(p => p.Tasks)
+                .ThenInclude(t => t.User)
+            .Include(p => p.Attachments)
+                .ThenInclude(a => a.User)
+            .Include(p => p.Threads)
+                .ThenInclude(t => t.User)
+            .FirstOrDefaultAsync(p => p.Id == id);
+
+        if (project == null) return NotFound();
 
         return View(project);
     }
