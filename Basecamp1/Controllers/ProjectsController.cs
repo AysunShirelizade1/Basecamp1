@@ -19,12 +19,12 @@ public class ProjectsController : Controller
     public IActionResult Index()
     {
         var userId = HttpContext.Session.GetInt32("UserId");
+        if (userId == null) return RedirectToAction("Login", "Account");
 
-        if (userId == null)
-            return RedirectToAction("Login", "Account");
-
+        // Həm öz proyektləri həm member olduqları
         var projects = _context.Projects
-            .Where(x => x.UserId == userId.Value)
+            .Where(x => x.UserId == userId.Value ||
+                        x.Members.Any(m => m.UserId == userId.Value))
             .ToList();
 
         return View(projects);
@@ -64,9 +64,16 @@ public class ProjectsController : Controller
                 .ThenInclude(a => a.User)
             .Include(p => p.Threads)
                 .ThenInclude(t => t.User)
+            .Include(p => p.Members)
+                .ThenInclude(m => m.User)
             .FirstOrDefaultAsync(p => p.Id == id);
 
         if (project == null) return NotFound();
+
+        // Bütün userləri view-a göndər (member əlavə etmək üçün)
+        ViewBag.AllUsers = _context.Users
+            .Where(u => u.Id != project.UserId)
+            .ToList();
 
         return View(project);
     }

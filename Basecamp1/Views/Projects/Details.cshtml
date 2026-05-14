@@ -93,7 +93,53 @@
         <p class="text-secondary">No attachments yet.</p>
     }
 </div>
+<!-- MEMBERS -->
+<div class="dashboard-card mb-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h3>Members</h3>
+    </div>
 
+    @if (currentUserId == Model.AdminId)
+    {
+        <form action="/ProjectMembers/Add" method="post" class="d-flex gap-2 mb-4">
+            <input type="hidden" name="projectId" value="@Model.Id" />
+            <select name="userId" class="form-select">
+                @foreach (var user in ViewBag.AllUsers as List<Basecamp1.Models.User>)
+                {
+                    <option value="@user.Id">@user.FullName (@user.Email)</option>
+                }
+            </select>
+            <button type="submit" class="btn btn-primary">Add Member</button>
+        </form>
+    }
+
+    @if (Model.Members != null && Model.Members.Any())
+    {
+        @foreach (var member in Model.Members)
+        {
+            <div class="project-item">
+                <div class="d-flex align-items-center gap-3">
+                    <span>👤</span>
+                    <strong>@member.User?.FullName</strong>
+                    <span class="text-secondary">@member.User?.Email</span>
+                </div>
+                @if (currentUserId == Model.AdminId)
+                {
+                    <form action="/ProjectMembers/Remove" method="post"
+                          style="display:inline;">
+                        <input type="hidden" name="projectId" value="@Model.Id" />
+                        <input type="hidden" name="userId" value="@member.UserId" />
+                        <button class="btn btn-danger btn-sm">Remove</button>
+                    </form>
+                }
+            </div>
+        }
+    }
+    else
+    {
+        <p class="text-secondary">No members yet.</p>
+    }
+</div>
 <!-- DISCUSSION THREADS -->
 <div class="dashboard-card">
     <div class="d-flex justify-content-between align-items-center mb-4">

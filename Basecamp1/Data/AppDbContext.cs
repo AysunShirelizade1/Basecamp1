@@ -16,7 +16,7 @@ public class AppDbContext : DbContext
     public DbSet<Attachment> Attachments { get; set; } = null!;
     public DbSet<ForumThread> Threads { get; set; } = null!;
     public DbSet<Message> Messages { get; set; } = null!;
-
+    public DbSet<ProjectMember> ProjectMembers { get; set; } = null!;
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -75,5 +75,16 @@ public class AppDbContext : DbContext
             .WithMany()
             .HasForeignKey(p => p.AdminId)
             .OnDelete(DeleteBehavior.Restrict);
+        modelBuilder.Entity<ProjectMember>()
+            .HasOne(pm => pm.Project)
+            .WithMany(p => p.Members)
+            .HasForeignKey(pm => pm.ProjectId)
+            .OnDelete(DeleteBehavior.Cascade);
+
+        modelBuilder.Entity<ProjectMember>()
+            .HasOne(pm => pm.User)
+            .WithMany()
+            .HasForeignKey(pm => pm.UserId)
+            .OnDelete(DeleteBehavior.NoAction);
     }
 }
