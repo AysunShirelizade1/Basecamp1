@@ -1,0 +1,55 @@
+﻿@model Basecamp1.Models.ForumThread
+@{
+    ViewBag.Title = Model.Title;
+    var currentUserId = (int)ViewBag.CurrentUserId;
+}
+
+<div class="container py-4" style="max-width:800px;">
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h3 class="text-white fw-bold">💬 @Model.Title</h3>
+            <small class="text-secondary">
+                @Model.Project?.Name • @Model.User?.FullName tərəfindən yaradılıb
+            </small>
+        </div>
+        <a asp-controller="Projects" asp-action="Details"
+           asp-route-id="@Model.ProjectId" class="btn btn-outline-secondary">← Geri</a>
+    </div>
+
+    <!-- Mesajlar -->
+    @if (!Model.Messages.Any())
+    {
+        <p class="text-secondary">Hələ mesaj yoxdur. İlk mesajı sən göndər!</p>
+    }
+    else
+    {
+        @foreach (var msg in Model.Messages)
+        {
+            <div class="card bg-dark border-secondary mb-3">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-start">
+                        <div>
+                            <span class="fw-semibold text-info">@msg.User?.FullName</span>
+                            <p class="text-white mt-2 mb-0">@msg.Content</p>
+                        </div>
+                        @if (msg.UserId == currentUserId)
+                        {
+                            <div class="d-flex gap-2 ms-3">
+                                <a asp-controller="Messages" asp-action="Edit"
+                                   asp-route-id="@msg.Id"
+                                   class="btn btn-sm btn-outline-warning">✏</a>
+                                <form asp-controller="Messages" asp-action="Delete" method="post">
+                                    <input type="hidden" name="id" value="@msg.Id" />
+                                    <button class="btn btn-sm btn-outline-danger">🗑</button>
+                                </form>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        }
+    }
+
+
+</div>
