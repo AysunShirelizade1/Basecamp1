@@ -12,7 +12,7 @@ public class AppDbContext : DbContext
 
     public DbSet<User> Users { get; set; } = null!;
     public DbSet<Project> Projects { get; set; } = null!;
-    public DbSet<TaskItem> TaskItem { get; set; } = null!;  
+    public DbSet<TaskItem> TaskItem { get; set; } = null!;
     public DbSet<Attachment> Attachments { get; set; } = null!;
     public DbSet<ForumThread> Threads { get; set; } = null!;
     public DbSet<Message> Messages { get; set; } = null!;

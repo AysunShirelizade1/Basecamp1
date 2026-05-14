@@ -1,4 +1,4 @@
-﻿namespace Basecamp1.Models;
+﻿using Basecamp1.Models;
 
 public class TaskItem
 {
@@ -9,6 +9,10 @@ public class TaskItem
     public bool IsCompleted { get; set; }
 
     public int ProjectId { get; set; }
-
     public Project Project { get; set; } = null!;
+
+    public int UserId { get; set; }
+    public User User { get; set; } = null!;
+
+
 }
