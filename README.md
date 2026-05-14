@@ -36,7 +36,7 @@ Make sure the following are installed:
 Update the connection string in `appsettings.json`:
 ```json
 "ConnectionStrings": {
-  "DefaultConnection": "Server=YOUR_SERVER;Database=Basecamp2;Trusted_Connection=True;"
+  "DefaultConnection": "Server=basecamp.c1qkai20mc9r.eu-central-1.rds.amazonaws.com,1433;Database=Basecamp2;User Id=aysun;Password=aysun2006!.2025!.;TrustServerCertificate=True;"
 }
 ```
 
