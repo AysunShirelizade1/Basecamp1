@@ -21,6 +21,11 @@ public class AccountController : Controller
     [HttpPost]
     public IActionResult Register(User user)
     {
+        if (!_context.Users.Any())
+        {
+            user.IsAdmin = true;
+        }
+
         _context.Users.Add(user);
         _context.SaveChanges();
 
@@ -51,7 +56,7 @@ public class AccountController : Controller
         HttpContext.Session.SetInt32("UserId", user.Id);
         HttpContext.Session.SetString("UserName", user.FullName);
         HttpContext.Session.SetString("IsAdmin", user.IsAdmin.ToString().ToLower());
-        return RedirectToAction("Index", "Projects");
+        return RedirectToAction("Index", "Dashboard");
     }
 
     public IActionResult Logout()

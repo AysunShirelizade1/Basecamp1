@@ -1,0 +1,61 @@
+﻿@model Basecamp1.Models.User
+
+<div class="profile-header">
+    <div>
+        <h1>Profile Settings</h1>
+        <p>Manage your account information and password.</p>
+    </div>
+</div>
+
+@if (TempData["Success"] != null)
+{
+    <div class="alert alert-success">@TempData["Success"]</div>
+}
+
+@if (TempData["Error"] != null)
+{
+    <div class="alert alert-danger">@TempData["Error"]</div>
+}
+
+<div class="profile-grid">
+    <div class="profile-card">
+        <h3>Account Information</h3>
+
+        <form method="post" action="/Profile/UpdateProfile">
+            <div class="mb-3">
+                <label>Full Name</label>
+                <input class="form-control" name="fullName" value="@Model.FullName" />
+            </div>
+
+            <div class="mb-3">
+                <label>Email</label>
+                <input class="form-control" name="email" value="@Model.Email" />
+            </div>
+
+            <button class="btn btn-primary">Save Changes</button>
+        </form>
+    </div>
+
+    <div class="profile-card">
+        <h3>Change Password</h3>
+
+        <form method="post" action="/Profile/ChangePassword">
+            <div class="mb-3">
+                <label>Current Password</label>
+                <input class="form-control" type="password" name="currentPassword" />
+            </div>
+
+            <div class="mb-3">
+                <label>New Password</label>
+                <input class="form-control" type="password" name="newPassword" />
+            </div>
+
+            <div class="mb-3">
+                <label>Confirm Password</label>
+                <input class="form-control" type="password" name="confirmPassword" />
+            </div>
+
+            <button class="btn btn-warning">Update Password</button>
+        </form>
+    </div>
+</div>

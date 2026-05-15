@@ -4,6 +4,7 @@ using Basecamp1.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Basecamp1.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260514061231_New")]
+    partial class New
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -153,32 +156,6 @@ namespace Basecamp1.Migrations
                     b.ToTable("Projects");
                 });
 
-            modelBuilder.Entity("Basecamp1.Models.ProjectMember", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("ProjectId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ProjectId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("ProjectMembers");
-                });
-
             modelBuilder.Entity("Basecamp1.Models.User", b =>
                 {
                     b.Property<int>("Id")
@@ -315,25 +292,6 @@ namespace Basecamp1.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Basecamp1.Models.ProjectMember", b =>
-                {
-                    b.HasOne("Basecamp1.Models.Project", "Project")
-                        .WithMany("Members")
-                        .HasForeignKey("ProjectId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Basecamp1.Models.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.Navigation("Project");
-
-                    b.Navigation("User");
-                });
-
             modelBuilder.Entity("TaskItem", b =>
                 {
                     b.HasOne("Basecamp1.Models.Project", "Project")
@@ -361,8 +319,6 @@ namespace Basecamp1.Migrations
             modelBuilder.Entity("Basecamp1.Models.Project", b =>
                 {
                     b.Navigation("Attachments");
-
-                    b.Navigation("Members");
 
                     b.Navigation("Tasks");
 
