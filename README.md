@@ -89,6 +89,8 @@ Register your account first, then log in with admin privileges.
    - Admin users can access `/Admin/Users`
    - From there you can promote users to admin or remove admin rights
 
+Live Demo: basecamp1-production.up.railway.app
+
 ### The Core Team
 
 
