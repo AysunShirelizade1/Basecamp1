@@ -7,12 +7,10 @@ namespace Basecamp1.Controllers;
 public class AttachmentsController : Controller
 {
     private readonly AppDbContext _context;
-    private readonly IWebHostEnvironment _env;
 
-    public AttachmentsController(AppDbContext context, IWebHostEnvironment env)
+    public AttachmentsController(AppDbContext context)
     {
         _context = context;
-        _env = env;
     }
 
     [HttpPost]
@@ -39,23 +37,15 @@ public class AttachmentsController : Controller
             return RedirectToAction("Details", "Projects", new { id = projectId });
         }
 
-        // Faylı saxla
-        var uploadsFolder = Path.Combine(_env.WebRootPath, "uploads");
-        Directory.CreateDirectory(uploadsFolder);
-
-        var uniqueName = Guid.NewGuid().ToString() + ext;
-        var filePath = Path.Combine(uploadsFolder, uniqueName);
-
-        using (var stream = new FileStream(filePath, FileMode.Create))
-        {
-            await file.CopyToAsync(stream);
-        }
+        using var ms = new MemoryStream();
+        await file.CopyToAsync(ms);
 
         var attachment = new Attachment
         {
             FileName = file.FileName,
-            FilePath = "/uploads/" + uniqueName,
             Format = ext.TrimStart('.'),
+            FileData = ms.ToArray(),
+            ContentType = file.ContentType,
             ProjectId = projectId,
             UserId = userId.Value
         };
@@ -66,6 +56,14 @@ public class AttachmentsController : Controller
         return RedirectToAction("Details", "Projects", new { id = projectId });
     }
 
+    public IActionResult Download(int id)
+    {
+        var attachment = _context.Attachments.Find(id);
+        if (attachment == null) return NotFound();
+
+        return File(attachment.FileData, attachment.ContentType, attachment.FileName);
+    }
+
     public IActionResult Delete(int id)
     {
         var userId = HttpContext.Session.GetInt32("UserId");
@@ -73,11 +71,6 @@ public class AttachmentsController : Controller
 
         var attachment = _context.Attachments.Find(id);
         if (attachment == null) return NotFound();
-
-        // Faylı diskdən sil
-        var fullPath = Path.Combine(_env.WebRootPath, attachment.FilePath.TrimStart('/'));
-        if (System.IO.File.Exists(fullPath))
-            System.IO.File.Delete(fullPath);
 
         int projectId = attachment.ProjectId;
         _context.Attachments.Remove(attachment);
