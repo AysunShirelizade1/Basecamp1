@@ -91,6 +91,9 @@ Register your account first, then log in with admin privileges.
 
 Live Demo: basecamp1-production.up.railway.app
 
+Admin Email and Password for login: Email: aysun@gmail.com
+                                 Password: 12345
+
 ### The Core Team
 
 
